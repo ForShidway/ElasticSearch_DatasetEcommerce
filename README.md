@@ -33,6 +33,21 @@ ElasticSearch_datasetEcommerce/
 └── README.md
 ```
 
+## 📥 Setup Dataset (PENTING!)
+
+Folder `dataset/` tidak di-push ke GitHub (untuk privacy). 
+
+- `products.csv`
+- `users.csv`
+- `orders.csv`
+- `order_items.csv`
+- `reviews.csv`
+- `events.csv`
+
+> Download atau ekstrak dataset e-commerce dari link berikut "https://www.kaggle.com/datasets/abhayayare/e-commerce-dataset?utm_source=chatgpt.com,"  lalu letakkan di `dataset/ecommerce_dataset/`
+
+---
+
 ## Cara Menjalankan
 
 1. Install Elasticsearch, Install Kibana, dan Jalankan Elasticsearch
