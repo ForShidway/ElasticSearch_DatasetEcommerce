@@ -1,7 +1,6 @@
 """
 Script Import: users.csv → Elasticsearch index 'users'
 Jalankan dengan: python scripts/import_users.py
-Pastikan sudah install: pip install pandas elasticsearch
 """
 import pandas as pd
 from elasticsearch import Elasticsearch, helpers
@@ -11,29 +10,28 @@ import math
 es = Elasticsearch("http://localhost:9200")
 index_name = "users"
 
-# Buat index dengan mapping
+# Buat index dengan mapping jika belum ada
 if not es.indices.exists(index=index_name):
     es.indices.create(index=index_name, body={
         "mappings": {
             "properties": {
-                "id":            {"type": "keyword"},
-                "first_name":    {"type": "text"},
-                "last_name":     {"type": "text"},
-                "email":         {"type": "keyword"},
-                "age":           {"type": "integer"},
-                "gender":        {"type": "keyword"},
-                "state":         {"type": "keyword"},
-                "city":          {"type": "keyword"},
-                "country":       {"type": "keyword"},
-                "zip":           {"type": "keyword"},
-                "latitude":      {"type": "float"},
-                "longitude":     {"type": "float"},
-                "traffic_source":{"type": "keyword"},
-                "created_at":    {"type": "date", "format": "yyyy-MM-dd HH:mm:ss||yyyy-MM-dd||epoch_millis"}
+                "user_id":      {"type": "keyword"},
+                "name":         {
+                    "type": "text",
+                    "fields": {
+                        "keyword": {"type": "keyword"}
+                    }
+                },
+                "email":        {"type": "keyword"},
+                "gender":       {"type": "keyword"},
+                "city":         {"type": "keyword"},
+                "signup_date":  {"type": "date"}
             }
         }
     })
     print(f"Index '{index_name}' berhasil dibuat.")
+else:
+    print(f"Index '{index_name}' sudah ada, skip pembuatan mapping.")
 
 # Baca CSV
 df = pd.read_csv("dataset/ecommerce_dataset/users.csv")
@@ -46,7 +44,7 @@ def gen_docs(df):
         doc = {k: (None if (isinstance(v, float) and math.isnan(v)) else v) for k, v in doc.items()}
         yield {
             "_index": index_name,
-            "_id": i + 1,
+            "_id": doc["user_id"], # Menggunakan user_id sebagai ID dokumen
             "_source": doc
         }
 
