@@ -1,0 +1,26 @@
+### Autocomplete / Prefix Search - menggunakan match_phrase_prefix
+### Cocok untuk field bertipe 'text' (sudah dianalisis oleh Elasticsearch)
+GET http://localhost:9200/products/_search
+Content-Type: application/json
+
+{
+  "query": {
+    "match_phrase_prefix": {
+      "product_name": "Nim"
+    }
+  }
+}
+
+###
+### Alternatif: prefix search di field keyword (exact match, case-sensitive)
+### Gunakan ini jika ingin match persis huruf besar/kecil
+GET http://localhost:9200/products/_search
+Content-Type: application/json
+
+{
+  "query": {
+    "prefix": {
+      "product_name.keyword": "Nim"
+    }
+  }
+}

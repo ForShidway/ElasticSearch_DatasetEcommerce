@@ -1,0 +1,10 @@
+GET http://localhost:9200/products/_search
+Content-Type: application/json
+
+{
+  "query": {
+    "match": {
+      "product_name": "Nimbus"
+    }
+  }
+}

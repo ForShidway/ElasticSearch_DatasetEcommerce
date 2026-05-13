@@ -1,0 +1,28 @@
+PUT products
+{
+  "mappings": {
+    "properties": {
+      "product_id": {
+        "type": "keyword"
+      },
+      "product_name": {
+        "type": "text"
+      },
+      "category": {
+        "type": "keyword"
+      },
+      "price": {
+        "type": "float"
+      },
+      "rating": {
+        "type": "float"
+      },
+      "stock": {
+        "type": "integer"
+      },
+      "description": {
+        "type": "text"
+      }
+    }
+  }
+}
